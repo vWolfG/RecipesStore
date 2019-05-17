@@ -16,6 +16,15 @@ class HeaderUIView: UIView {
             nameRecipeLabel.numberOfLines = 0
             nameRecipeLabel.layer.cornerRadius = 5.0
             nameRecipeLabel.layer.masksToBounds = true
+           
+        }
+    }
+    @IBOutlet var typeRecipeLabel: UILabel! {
+        didSet{
+            typeRecipeLabel.numberOfLines = 0
+            typeRecipeLabel.layer.cornerRadius = 5.0
+            typeRecipeLabel.layer.masksToBounds = true
+           
         }
     }
 

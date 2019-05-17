@@ -103,6 +103,7 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
             present(requestImage, animated: true, completion: nil)
             
         }
+    
     }
     
     // Mark - ImagePickerControllerDelegate
@@ -168,5 +169,5 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
         
     }
 
-   
+    
 }

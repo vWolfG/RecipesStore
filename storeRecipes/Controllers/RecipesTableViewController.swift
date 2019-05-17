@@ -10,12 +10,12 @@ import UIKit
 
 class RecipesTableViewController: UITableViewController {
 
-    var RecipesType = ["Breakfast" : Recipes(name:"Lazani", ingredients: "hihihihi", image: ""),
-                       "Lunch": Recipes(name:"Картоха", ingredients: "Много картохи", image: ""),
-                       "Dinner": Recipes(name:"Салатик", ingredients: "Овощи там всякие", image: ""),"Dessert": Recipes(name:"Sladkoe", ingredients: "Овощи там всякие", image: "")
-    ]
+    var RecipesStore = [ Recipes(name:"Lazani", type: "Breakfast", ingredients: "hihihihi", image: "breakfast", steps: "sksmdsfdf"),
+                       Recipes(name:"Картоха", type: "Lunch", ingredients: "Много картохи", image: "lunch", steps: "sksmdsfdf"),
+                       Recipes(name:"Салатик", type: "Dinner", ingredients: "Овощи там всякие", image: "dinner", steps: "sksmdsfdf"), Recipes(name:"Sladkoe", type: "Dessert", ingredients: "Овощи там всякие", image: "", steps: "sksmdsfdf") ]
     var TypeRecipes: String!
     
+    var recipesList = Array<Recipes>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,14 +48,19 @@ class RecipesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return RecipesType.count
+        var recipesList = RecipesStore.filter{$0.type.contains(TypeRecipes) != false }
+        return recipesList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipesTableViewCell
-        cell.MealNameLabel.text = RecipesType[TypeRecipes]?.name
-        cell.MealImage.image = UIImage(named: TypeRecipes.lowercased())
+        
+        recipesList = RecipesStore.filter{$0.type.contains(TypeRecipes) != false }
+       // if RecipesStore
+        
+        cell.MealNameLabel.text = recipesList[indexPath.row].name
+        cell.MealImage.image = UIImage(named: recipesList[indexPath.row].image)
 
         return cell
     }
@@ -102,14 +107,20 @@ class RecipesTableViewController: UITableViewController {
     }
     */
 
-    /*
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "showDetails" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let destinationController =  segue.destination as! DetailViewController
+                destinationController.recipesStore = recipesList[indexPath.row]
+            }
+           
+        }
     }
-    */
+    
 
 }

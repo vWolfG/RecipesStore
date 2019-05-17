@@ -10,16 +10,20 @@ import UIKit
 
 class Recipes {
     var name: String
+    var type: String
     var ingredients: String
     var image: String
+    var steps: String
     
-    init(name: String, ingredients: String, image: String) {
+    init(name: String, type: String,  ingredients: String, image: String, steps: String) {
         self.name =  name
         self.ingredients = ingredients
         self.image = image
+        self.type = type
+        self.steps = steps
     }
     convenience init() {
-        self.init(name: "", ingredients: "", image: "")
+        self.init(name: "", type:"", ingredients: "", image: "", steps: "")
     }
 }
 
