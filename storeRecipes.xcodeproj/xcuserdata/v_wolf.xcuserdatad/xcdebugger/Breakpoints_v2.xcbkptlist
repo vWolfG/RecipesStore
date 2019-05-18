@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "storeRecipes/Controllers/RecipesViewController.swift"
-            timestampString = "579685272.934567"
+            timestampString = "579775109.775951"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>

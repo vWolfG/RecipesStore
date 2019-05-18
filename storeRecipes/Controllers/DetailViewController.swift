@@ -19,25 +19,26 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.largeTitleDisplayMode = .never
+        //navigationItem.largeTitleDisplayMode = .never
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
-        navigationController?.navigationBar.tintColor = UIColor.black
+        navigationController?.navigationBar.tintColor = UIColor.white
+       
         
         
-      //  tableView.contentInsetAdjustmentBehavior = .never // shift the table view upward
-        
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-        
         headerView.nameRecipeLabel.text = recipesStore.name
         headerView.typeRecipeLabel.text = recipesStore.type
         headerView.headerRecipeImage.image = UIImage(named: recipesStore.image)
+        
+       
     
     }
     
@@ -77,6 +78,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
 

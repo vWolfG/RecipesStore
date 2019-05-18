@@ -27,14 +27,14 @@ class RecipesViewController: UIViewController{
     
     var type: String! = ""
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        navigationController?.navigationBar.isHidden = true
+//    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .black
+        //navigationController?.navigationBar.tintColor = .black
        
 
     }
@@ -43,8 +43,10 @@ class RecipesViewController: UIViewController{
    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tableRecipes" {
-            let destinationController = segue.destination as! RecipesTableViewController
+            let destinationNavController = segue.destination as! UINavigationController
+            let destinationController = destinationNavController.topViewController as! RecipesTableViewController
             destinationController.TypeRecipes = self.type
+            print("here")
         }
     }
     
@@ -62,10 +64,13 @@ class RecipesViewController: UIViewController{
             self.type = "Desser"
         default:
             self.type = ""
-
-            
         }
         self.performSegue(withIdentifier: "tableRecipes", sender: self)
     }
+    
+    @IBAction func goToBackRecipesTable(segue:UIStoryboardSegue) {
+        dismiss(animated: true, completion: nil)
+    }
+
 
 }

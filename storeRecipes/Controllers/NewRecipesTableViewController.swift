@@ -168,6 +168,10 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
         dismiss(animated: true, completion: nil)
         
     }
+    
+    @IBAction func goToBack(_ Sender: Any){
+        dismiss(animated: true, completion: nil)
+    }
 
     
 }

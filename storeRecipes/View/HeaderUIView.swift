@@ -10,7 +10,13 @@ import UIKit
 
 class HeaderUIView: UIView {
 
-    @IBOutlet var headerRecipeImage: UIImageView!
+    @IBOutlet var headerRecipeImage: UIImageView! 
+//        didSet{
+//            let aspectRatioConstraint = NSLayoutConstraint(item: headerRecipeImage, attribute: .height, relatedBy: .equal, toItem: headerRecipeImage.superview, attribute: .width, multiplier: (2.0/1.0), constant: 0)
+//            headerRecipeImage.addConstraint(aspectRatioConstraint)
+//
+//        }
+    
     @IBOutlet var nameRecipeLabel: UILabel!{
         didSet{
             nameRecipeLabel.numberOfLines = 0

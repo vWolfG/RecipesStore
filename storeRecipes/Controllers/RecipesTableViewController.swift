@@ -12,22 +12,26 @@ class RecipesTableViewController: UITableViewController {
 
     var RecipesStore = [ Recipes(name:"Lazani", type: "Breakfast", ingredients: "hihihihi", image: "breakfast", steps: "sksmdsfdf"),
                        Recipes(name:"Картоха", type: "Lunch", ingredients: "Много картохи", image: "lunch", steps: "sksmdsfdf"),
-                       Recipes(name:"Салатик", type: "Dinner", ingredients: "Овощи там всякие", image: "dinner", steps: "sksmdsfdf"), Recipes(name:"Sladkoe", type: "Dessert", ingredients: "Овощи там всякие", image: "", steps: "sksmdsfdf") ]
+                       Recipes(name:"Салатик", type: "Dinner", ingredients: "Овощи там всякие", image: "dinner", steps: "sksmdsfdf"), Recipes(name:"Sladkoe", type: "Dessert", ingredients: "Овощи там всякие", image: "pudding", steps: "sksmdsfdf") ]
     var TypeRecipes: String!
     
     var recipesList = Array<Recipes>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = UIView() // delete empty rows
+       // tableView.tableFooterView = UIView() // delete empty rows
         
         navigationController?.navigationBar.isHidden = false
+        
         //transparent nav bar
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
+        
         self.title = "Recipes for " + TypeRecipes.lowercased()
+       
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+       
         if let customFont = UIFont(name: "IndieFlower", size: 26.0) {
             navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: customFont]
         }
@@ -36,11 +40,11 @@ class RecipesTableViewController: UITableViewController {
         
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(animated)
-    
-        
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super .viewWillAppear(animated)
+//
+//
+//    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -48,7 +52,7 @@ class RecipesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        var recipesList = RecipesStore.filter{$0.type.contains(TypeRecipes) != false }
+        recipesList = RecipesStore.filter{$0.type.contains(TypeRecipes) != false }
         return recipesList.count
     }
 
@@ -61,56 +65,25 @@ class RecipesTableViewController: UITableViewController {
         
         cell.MealNameLabel.text = recipesList[indexPath.row].name
         cell.MealImage.image = UIImage(named: recipesList[indexPath.row].image)
-
         return cell
+        
     }
     
     
-  
-    
-    @IBAction func returnToTableRecipes(segue: UIStoryboardSegue) {
-        dismiss(animated: true, completion: nil)
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        
+        
     }
+   
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
-    }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "showDetails" {
