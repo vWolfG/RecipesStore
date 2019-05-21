@@ -9,7 +9,10 @@
 import UIKit
 import CoreData
 
-class RecipesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class RecipesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate//, CreateNewRecipesDelegate
+{
+
+    
 
     
     @IBOutlet var emptyView: UIView!
@@ -39,27 +42,19 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
                 try fetchResultController.performFetch()  //execute the fetch request
                 if let fetchedObjects = fetchResultController.fetchedObjects {
                     recipesStore = fetchedObjects
+                    //tableView.reloadData()
                 }
+                
             } catch {
                 print(error)
             }
             
-//            let context = appDelegate.persistentContainer.viewContext
-//            do {
-//                let recipes = try context.fetch(fetchRequest)
-//                recipes.forEach { (recipe) in
-//                    print(recipe.name ?? "")
-//                }
-//                self.recipesStore = recipes
-//                tableView.reloadData()
-//            }
-//            catch let err {
-//                print("Fetch request error \(err)")
-//            }
             
         }
         
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +88,7 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         
     }
     
+    
     //it is called when NSFetchResultsController is about to start processing the content change.
     // We tell the table view, "Hey, we're going to update the table. Get ready for it."
     
@@ -108,33 +104,36 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         case .insert:
             if let newIndexPath = newIndexPath {
                 tableView.insertRows(at: [newIndexPath], with: .fade)
+                if let fetchedObject = controller.fetchedObjects {
+                    recipesStore = fetchedObject as! [RecipesMO]
+                }
                 tableView.reloadData()
             }
         case .delete:
-            if let newIndexPath = newIndexPath {
-                tableView.deleteRows(at: [newIndexPath], with: .fade)
-                tableView.reloadData()
-            }
-        case .update:
-            if let newIndexPath = newIndexPath {
-                tableView.reloadRows(at: [newIndexPath], with: .fade)
-                tableView.reloadData()
-            }
+            self.recipesStore.remove(at: indexPath!.row)
+            self.tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.reloadData()
+        
+            
+//
+//            case .update:
+//                if let newIndexPath = newIndexPath {
+//                    tableView.reloadRows(at: [newIndexPath], with: .fade)
+//                    tableView.reloadData()
+//                }
         default:
             tableView.reloadData()
             
         }
         
-        if let fetchedObject = controller.fetchedObjects {
-            recipesStore = fetchedObject as! [RecipesMO]
-        }
+        
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-
     
+    // MARK: - DataSourceDelegate
     override func numberOfSections(in tableView: UITableView) -> Int {
         if recipesStore.count > 0 {
             tableView.backgroundView?.isHidden = true
@@ -147,21 +146,16 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         
         return 1
     }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-       //filtredRecipesStore = recipesStore.filter{$0.type.contains(TypeRecipes) != false }
         return recipesStore.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipesTableViewCell
-        
-        //recipesList = RecipesStore.filter{$0.type.contains(TypeRecipes) != false }
-      
-        
         cell.MealNameLabel.text = recipesStore[indexPath.row].name
+        //print(ecipesStore[indexPath.row].name)
         if let recipesImage = recipesStore[indexPath.row].image {
             cell.MealImage.image = UIImage(data: recipesImage as Data)
         }
@@ -174,26 +168,50 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "") { (contextualAction, view, completeHandler) in
+            
             if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
                 let context = appDelegate.persistentContainer.viewContext
                 let recipeForDelete = self.fetchResultController.object(at: indexPath)
+
                 context.delete(recipeForDelete)
                 appDelegate.saveContext()
-                tableView.reloadData()
-            
             }
+            completeHandler(true)
+        }
+        
+        let editAction = UIContextualAction(style: .normal , title: "") { (action, view, completeHandler) in
+            print("trying to edit")
+            
+           
+            
+            let main = UIStoryboard(name: "Main", bundle: nil)
+            let editContoller = main.instantiateViewController(withIdentifier: "NewRecipesTableViewController") as! NewRecipesTableViewController
+            editContoller.recipe = self.recipesStore[indexPath.row]
+            //        let editViewController = NewRecipesTableViewController()
+            let navController = UINavigationController(rootViewController: editContoller)
+            self.present(navController, animated: true, completion: nil)
+            //present(editViewController, animated: true, completion: nil)
+            
             completeHandler(true)
         }
         deleteAction.backgroundColor = UIColor.red
         deleteAction.image = UIImage(named: "delete")
         
-        let swipeConfig = UISwipeActionsConfiguration(actions: [deleteAction])
+        editAction.backgroundColor = UIColor.lightGray
+        editAction.image = UIImage(named: "pen")
+        
+        let swipeConfig = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         
         return swipeConfig
         
     }
-   
-
+//
+//    // MARK: - CreateNewRecipesDelegate
+//    func saveNewRecipe(recipe: RecipesMO) {
+//        self.recipesStore.append(recipe)
+//        let newIndexPath = IndexPath(row: self.recipesStore.count-1, section: 0)
+//        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+//    }
 
 
 

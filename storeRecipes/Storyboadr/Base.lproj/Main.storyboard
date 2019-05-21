@@ -34,7 +34,7 @@
         <!--Add New Recipes-->
         <scene sceneID="HxM-cv-PBn">
             <objects>
-                <tableViewController id="Y6L-44-cP7" customClass="NewRecipesTableViewController" customModule="storeRecipes" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewRecipesTableViewController" id="Y6L-44-cP7" customClass="NewRecipesTableViewController" customModule="storeRecipes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zvA-Dn-vVy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -641,9 +641,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="                                                                                " leftItemsSupplementBackButton="YES" id="r6u-BP-SSe">
                         <barButtonItem key="backBarButtonItem" title="                                                                    " id="YOF-qa-2ZZ"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="pen" style="plain" id="sAJ-Ct-vJ0">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="headerView" destination="IFD-jy-afC" id="h0P-1u-0dR"/>
@@ -663,7 +660,6 @@
         <image name="close" width="16" height="16"/>
         <image name="emptyImage" width="307" height="291"/>
         <image name="emptyPhoto" width="24" height="18"/>
-        <image name="pen" width="25" height="24"/>
         <image name="plus" width="16" height="16"/>
         <image name="save" width="20" height="20"/>
     </resources>

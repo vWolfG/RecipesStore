@@ -9,10 +9,15 @@
 import UIKit
 import CoreData
 
+//protocol CreateNewRecipesDelegate {
+//    func saveNewRecipe(recipe: RecipesMO)
+//}
+
+
 class NewRecipesTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    var recipe: RecipesMO!
-    
+
+    var recipe: RecipesMO?
     var recipesType: String!
     
     @IBOutlet var recipesTypes: [UIButton]! {
@@ -52,6 +57,11 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
     
     var isCheckedButton = Array(repeating: false, count: 4)
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        navigationItem.title = recipe == nil ? "Create recipe" : "Edit recipe"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,6 +184,8 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
             
         }
         
+        
+        
         if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
             let recipe = NSEntityDescription.insertNewObject(forEntityName: "Recipes", into: appDelegate.persistentContainer.viewContext)
             recipe.setValue(nameField.text, forKey: "name")
@@ -195,12 +207,11 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
             }
             
             
-            // add code fore saving data
+            
             appDelegate.saveContext()
+            
+
         }
-        
-        
-        
         dismiss(animated: true, completion: nil)
         
     }
