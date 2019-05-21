@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class NewRecipesTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
-
+    
+    var recipe: RecipesMO!
+    
+    var recipesType: String!
+    
     @IBOutlet var recipesTypes: [UIButton]! {
         didSet {
             guard let customFont = UIFont(name: "IndieFLower", size: 18.0) else {return}
@@ -18,7 +23,7 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
                 recipesTypes[i].titleLabel?.font = customFont
                 recipesTypes[i].tag = i
                 recipesTypes[i].setImage(UIImage(named: "circle"), for: .normal)
-
+                
             }
             
         }
@@ -51,7 +56,7 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -59,8 +64,8 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
         if let customFont = UIFont(name: "IndieFlower", size: 26.0) {
             navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: customFont]
         }
-
-      
+        
+        
     }
     
     // Mark - TextFieldDelegate
@@ -71,6 +76,7 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
         }
         return true
     }
+    
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -103,18 +109,19 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
             present(requestImage, animated: true, completion: nil)
             
         }
-    
+        
     }
     
     // Mark - ImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[ UIImagePickerController.InfoKey.originalImage] as? UIImage {
+           // let flippedImage = UIImage(cgImage: selectedImage.cgImage!, scale: selectedImage.scale, orientation:.left)
             recipeImage.image = selectedImage
             recipeImage.contentMode = .scaleAspectFill
             recipeImage.clipsToBounds = true
         }
         
-        // apply constraints 
+        // apply constraints
         let leadingConstraint = NSLayoutConstraint(item: recipeImage, attribute: .leading, relatedBy: .equal, toItem: recipeImage.superview , attribute: .leading , multiplier: 1, constant: 0)
         leadingConstraint.isActive = true
         
@@ -143,7 +150,11 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
                     self.isCheckedButton[i] = false
                     self.recipesTypes[i].setImage(UIImage(named: "circle"), for: .normal)
                 }
-                sender.setImage(image, for: .normal)
+                else {
+                    self.recipesType = sender.titleLabel!.text // saving type
+                    //print(self.recipesType ?? "")
+                    sender.setImage(image, for: .normal)
+                }
             }
             
         }
@@ -163,15 +174,36 @@ class NewRecipesTableViewController: UITableViewController, UIImagePickerControl
             
         }
         
-        // add code fore saving data
+        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+            let recipe = NSEntityDescription.insertNewObject(forEntityName: "Recipes", into: appDelegate.persistentContainer.viewContext)
+            recipe.setValue(nameField.text, forKey: "name")
+            recipe.setValue(recipesType, forKey: "type")
+            recipe.setValue(ingredientsField.text, forKey: "ingredients")
+            recipe.setValue(stepsField.text, forKey: "steps")
+            
+            let defaulImage = UIImage(named: "emptyPhoto")
+            
+            if recipeImage.image  == defaulImage, let newImage = UIImage(named: recipesType.lowercased())  {
+                
+                recipe.setValue(newImage.pngData(), forKey: "image")
+            }
+            else {
+                if let image = recipeImage.image  {
+                    recipe.setValue(image.pngData(), forKey: "image")
+                }
+                
+            }
+            
+            
+            // add code fore saving data
+            appDelegate.saveContext()
+        }
+        
+        
         
         dismiss(animated: true, completion: nil)
         
     }
     
-    @IBAction func goToBack(_ Sender: Any){
-        dismiss(animated: true, completion: nil)
-    }
-
     
 }

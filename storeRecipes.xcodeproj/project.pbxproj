@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		133E46B2228FE48B00FC2856 /* recipesStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 133E46B0228FE48B00FC2856 /* recipesStore.xcdatamodeld */; };
 		134C937E228E6BE100140564 /* navigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C937D228E6BE100140564 /* navigationBar.swift */; };
 		134C93AB228EA9F400140564 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 134C93AA228EA9F300140564 /* Assets.xcassets */; };
 		1360EAB6228522B4000FF695 /* NewRecipesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1360EAB5228522B4000FF695 /* NewRecipesTableViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		133E46B1228FE48B00FC2856 /* recipesStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = recipesStore.xcdatamodel; sourceTree = "<group>"; };
 		134C937D228E6BE100140564 /* navigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navigationBar.swift; sourceTree = "<group>"; };
 		134C93AA228EA9F300140564 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1360EAB5228522B4000FF695 /* NewRecipesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecipesTableViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				13AE2635227AE3DA00F6171D /* Recipes.swift */,
+				133E46B0228FE48B00FC2856 /* recipesStore.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				1360EAB6228522B4000FF695 /* NewRecipesTableViewController.swift in Sources */,
 				13AE2634227AABA900F6171D /* RecipesTableViewCell.swift in Sources */,
 				13BDFCA5228AB70400890C3C /* HeaderUIView.swift in Sources */,
+				133E46B2228FE48B00FC2856 /* recipesStore.xcdatamodeld in Sources */,
 				13C64F9F22843BCC00BCAD5E /* RecipesViewController.swift in Sources */,
 				13AE2636227AE3DA00F6171D /* Recipes.swift in Sources */,
 				13F2C7C2228D2F3F00655DCA /* DetailTableViewCell.swift in Sources */,
@@ -420,6 +424,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		133E46B0228FE48B00FC2856 /* recipesStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				133E46B1228FE48B00FC2856 /* recipesStore.xcdatamodel */,
+			);
+			currentVersion = 133E46B1228FE48B00FC2856 /* recipesStore.xcdatamodel */;
+			path = recipesStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 13AE260F227AA6C500F6171D /* Project object */;
 }

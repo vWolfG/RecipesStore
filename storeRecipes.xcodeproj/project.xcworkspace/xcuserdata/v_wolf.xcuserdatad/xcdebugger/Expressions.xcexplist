@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "NewRecipesTableViewController.saveNewRecipe(_:):NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "recipesType">
+            </PersistentString>
+            <PersistentString
+               value = "recipeImage.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RecipesTableViewController.tableView(_:cellForRowAt:):RecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "TypeRecipes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

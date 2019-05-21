@@ -11,8 +11,9 @@ import UIKit
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
    
     
-     @IBOutlet var tableView: UITableView!
-    var recipesStore = Recipes()
+    @IBOutlet var tableView: UITableView!
+    
+    var recipesStore: RecipesMO!
 
     @IBOutlet var headerView: HeaderUIView!
     
@@ -36,7 +37,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         headerView.nameRecipeLabel.text = recipesStore.name
         headerView.typeRecipeLabel.text = recipesStore.type
-        headerView.headerRecipeImage.image = UIImage(named: recipesStore.image)
+        
+        if let recipesImage = recipesStore.image {
+            headerView.headerRecipeImage.image = UIImage(data: recipesImage as Data)
+        }
+        
         
        
     

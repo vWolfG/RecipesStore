@@ -46,7 +46,6 @@ class RecipesViewController: UIViewController{
             let destinationNavController = segue.destination as! UINavigationController
             let destinationController = destinationNavController.topViewController as! RecipesTableViewController
             destinationController.TypeRecipes = self.type
-            print("here")
         }
     }
     
@@ -61,16 +60,17 @@ class RecipesViewController: UIViewController{
         case 3:
             self.type = "Dinner"
         case 4:
-            self.type = "Desser"
+            self.type = "Dessert"
         default:
             self.type = ""
         }
         self.performSegue(withIdentifier: "tableRecipes", sender: self)
     }
     
-    @IBAction func goToBackRecipesTable(segue:UIStoryboardSegue) {
+  
+    @IBAction func goToBackRecipesType(segue:UIStoryboardSegue) {
         dismiss(animated: true, completion: nil)
+        //print("out of here")
     }
-
 
 }

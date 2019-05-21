@@ -15,7 +15,12 @@ class RecipesTableViewCell: UITableViewCell {
             MealNameLabel.numberOfLines = 0
         }
     }
-    @IBOutlet var MealImage: UIImageView!
+    @IBOutlet var MealImage: UIImageView! {
+        didSet {
+            MealImage.layer.cornerRadius = MealImage.bounds.width / 2
+            MealImage.layer.masksToBounds = true
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
