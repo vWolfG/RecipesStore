@@ -220,7 +220,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="xjK-TJ-Hjm">
                                                     <rect key="frame" x="20" y="5" width="374" height="389.66666666666669"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBY-Um-u66">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBY-Um-u66">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="29.333333333333332"/>
                                                             <fontDescription key="fontDescription" name="IndieFlower" family="Indie Flower" pointSize="20"/>
                                                             <nil key="textColor"/>
@@ -261,7 +261,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="save" id="gnP-AA-Geg">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="saveNewRecipe:" destination="Y6L-44-cP7" id="N6I-VG-pO2"/>
+                                <action selector="handleSave:" destination="Y6L-44-cP7" id="wjD-Hg-JfL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -14,10 +14,65 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "NewRecipesTableViewController.imagePickerController(_:didFinishPickingMediaWithInfo:):NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "recipeImage.image ">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipesTableViewController.createNewRecipe():NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "newRecipesType">
+            </PersistentString>
+            <PersistentString
+               value = "recipesType">
+            </PersistentString>
+            <PersistentString
+               value = "recipeImage.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipesTableViewController.checkType(_:):NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.recipesType ">
+            </PersistentString>
+            <PersistentString
+               value = "sender.titleLabel!.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "RecipesTableViewController.tableView(_:cellForRowAt:):RecipesTableViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "TypeRecipes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipesTableViewController.handleSave(_:):NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "nameField.text">
+            </PersistentString>
+            <PersistentString
+               value = "recipesType">
+            </PersistentString>
+            <PersistentString
+               value = "stepsField.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewRecipesTableViewController.viewDidLoad():NewRecipesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "recipesType">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
