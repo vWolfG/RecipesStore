@@ -9,21 +9,66 @@
 import UIKit
 import CoreData
 
-class RecipesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate//, CreateNewRecipesDelegate
+class RecipesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating//, CreateNewRecipesDelegate
 {
-
+    
     
 
-    
     @IBOutlet var emptyView: UIView!
     
     var recipesStore = [RecipesMO]()
-    var filtredRecipesStore = [RecipesMO]()
+    var searchResults =  [RecipesMO]()
     
     var TypeRecipes: String!
     var fetchResultController: NSFetchedResultsController<RecipesMO>!
     
-    //var recipesList = Array<Recipes>()
+    var searchController: UISearchController!
+    
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       // tableView.tableFooterView = UIView() // delete empty rows
+        
+        navigationController?.navigationBar.isHidden = false
+        
+        //transparent nav bar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
+        self.title = "Recipes for " + TypeRecipes.lowercased()
+       
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+       
+        if let customFont = UIFont(name: "IndieFlower", size: 26.0) {
+            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: customFont]
+        }
+        
+        //set empty view
+        tableView.backgroundView = emptyView
+        tableView.backgroundView?.isHidden = true
+        
+        // delete not using rows
+        tableView.tableFooterView = UIView()
+        
+        searchController = UISearchController(searchResultsController: nil)
+        tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.placeholder = "Write recipe name..."
+        searchController.searchBar.isTranslucent = true
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.backgroundImage = UIImage()
+        
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        fetchData()
+        
+        
+        
+    }
+    
     private func fetchData(){
         let fetchRequest: NSFetchRequest<RecipesMO> = RecipesMO.fetchRequest()
         //describe how the fetched objects are sorted
@@ -54,37 +99,21 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         
     }
     
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-       // tableView.tableFooterView = UIView() // delete empty rows
-        
-        navigationController?.navigationBar.isHidden = false
-        
-        //transparent nav bar
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        
-        self.title = "Recipes for " + TypeRecipes.lowercased()
-       
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
-       
-        if let customFont = UIFont(name: "IndieFlower", size: 26.0) {
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: customFont]
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filterContent(for: searchText)
+            tableView.reloadData()
         }
-        
-        //set empty view
-        tableView.backgroundView = emptyView
-        tableView.backgroundView?.isHidden = true
-        
-        // delete not using rows
-        tableView.tableFooterView = UIView()
-        
-        fetchData()
-        
-        
+    }
+    
+    func filterContent(for searchText: String){
+        searchResults = recipesStore.filter({ (recipe) -> Bool in
+            if let name = recipe.name {
+                let isMatch = name.localizedCaseInsensitiveContains(searchText)
+                return isMatch
+            }
+            return false
+        })
         
     }
     
@@ -147,18 +176,36 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipesStore.count
+        if searchController != nil {
+            if searchController.isActive {
+                return searchResults.count
+            }
+            else {
+                return recipesStore.count
+            }
+        }
+        else {
+            return recipesStore.count
+        }
+        //return recipesStore.count
+        
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipesTableViewCell
-        cell.MealNameLabel.text = recipesStore[indexPath.row].name
+       
+        
+        
+        let recipe = (searchController.isActive) ? searchResults[indexPath.row] : recipesStore[indexPath.row]
+     
+        cell.MealNameLabel.text = recipe.name
         //print(ecipesStore[indexPath.row].name)
-        if let recipesImage = recipesStore[indexPath.row].image {
+        if let recipesImage = recipe.image {
             cell.MealImage.image = UIImage(data: recipesImage as Data)
         }
+       
         
         return cell
         
@@ -187,10 +234,10 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
             let main = UIStoryboard(name: "Main", bundle: nil)
             let editContoller = main.instantiateViewController(withIdentifier: "NewRecipesTableViewController") as! NewRecipesTableViewController
             editContoller.recipe = self.recipesStore[indexPath.row]
-            //        let editViewController = NewRecipesTableViewController()
+        
             let navController = UINavigationController(rootViewController: editContoller)
             self.present(navController, animated: true, completion: nil)
-            //present(editViewController, animated: true, completion: nil)
+
             
             completeHandler(true)
         }
@@ -205,13 +252,6 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         return swipeConfig
         
     }
-//
-//    // MARK: - CreateNewRecipesDelegate
-//    func saveNewRecipe(recipe: RecipesMO) {
-//        self.recipesStore.append(recipe)
-//        let newIndexPath = IndexPath(row: self.recipesStore.count-1, section: 0)
-//        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
-//    }
 
 
 
@@ -224,7 +264,9 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         if segue.identifier == "showDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController =  segue.destination as! DetailViewController
-                destinationController.recipesStore = recipesStore[indexPath.row]
+                destinationController.recipesStore = (self.searchController.isActive) ?  searchResults[indexPath.row] : recipesStore[indexPath.row]
+                
+                
             }
            
         }
