@@ -21,6 +21,7 @@ class DetailTableViewCell: UITableViewCell {
     
     @IBOutlet var descriptionLabel: UILabel! {
         didSet {
+            descriptionLabel.numberOfLines = 0
             descriptionLabel.layer.cornerRadius = 5.0
             descriptionLabel.layer.masksToBounds = true
         }

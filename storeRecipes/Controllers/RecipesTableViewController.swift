@@ -176,18 +176,24 @@ class RecipesTableViewController: UITableViewController, NSFetchedResultsControl
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController != nil {
-            if searchController.isActive {
-                return searchResults.count
-            }
-            else {
-                return recipesStore.count
-            }
+//        if searchController != nil {
+//            if searchController.isActive {
+//                return searchResults.count
+//            }
+//            else {
+//                return recipesStore.count
+//            }
+//        }
+//        else {
+//            return recipesStore.count
+//        }
+        //return recipesStore.count
+        if searchController != nil && searchController!.isActive {
+            return searchResults.count
         }
         else {
             return recipesStore.count
         }
-        //return recipesStore.count
         
     }
     
