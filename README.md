@@ -1,3 +1,2 @@
 # RecipesStore
-Mobile-app for recipes storing. Swift
-1
+![](images/First-View.png)
